@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
+import { EmptyReq } from "./common";
 
 export const protobufPackage = "user";
 
@@ -23,6 +24,11 @@ export interface SignupParam {
   password: string;
   sessionId: string;
   captcha: string;
+}
+
+export interface CaptchaObj {
+  text: string;
+  data: string;
 }
 
 export const USER_PACKAGE_NAME = "user";
@@ -59,3 +65,28 @@ export function UserServiceControllerMethods() {
 }
 
 export const USER_SERVICE_NAME = "UserService";
+
+export interface CaptchaServiceClient {
+  getCaptcha(request: EmptyReq): Observable<CaptchaObj>;
+}
+
+export interface CaptchaServiceController {
+  getCaptcha(request: EmptyReq): Promise<CaptchaObj> | Observable<CaptchaObj> | CaptchaObj;
+}
+
+export function CaptchaServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["getCaptcha"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("CaptchaService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("CaptchaService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const CAPTCHA_SERVICE_NAME = "CaptchaService";

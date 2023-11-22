@@ -7,8 +7,9 @@
  */
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
+import { CaptchaModule } from './captcha/captcha.module';
 
 @Module({
-  imports: [UserModule]
+  imports: [UserModule, CaptchaModule]
 })
 export class AppModule {}

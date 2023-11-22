@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm dev:client & pnpm dev:user-server & pnpm dev:item-server & pnpm dev:bff",
+    "dev": "pnpm dev:user-server & pnpm dev:order-server & pnpm dev:item-server & pnpm dev:bff & pnpm dev:client",
     "dev:client": "pnpm -F client dev",
     "dev:user-server": "pnpm -F user-server start:dev",
     "dev:item-server": "pnpm -F item-server start:dev",

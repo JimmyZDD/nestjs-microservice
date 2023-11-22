@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package user;
 
+import "common.proto";
+
 service UserService {
   rpc verify (Token) returns (User) {}
   rpc login (LoginParam) returns (Token) {}
@@ -29,3 +31,12 @@ message SignupParam {
   string captcha = 4;
 }
 
+service CaptchaService {
+  rpc getCaptcha (common.EmptyReq) returns (CaptchaObj) {}
+}
+
+
+message CaptchaObj {
+  string text = 1;
+  string data = 2;
+}
