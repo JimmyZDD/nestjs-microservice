@@ -19,6 +19,7 @@
 .body {
   flex: 1 1;
   display: flex;
+  overflow-y: auto;
 }
 
 .tabBar {

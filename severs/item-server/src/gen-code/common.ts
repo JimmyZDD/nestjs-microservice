@@ -12,4 +12,7 @@ export interface Pagination {
   pageSize: number;
 }
 
+export interface EmptyReq {
+}
+
 export const COMMON_PACKAGE_NAME = "common";

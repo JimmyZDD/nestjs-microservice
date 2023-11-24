@@ -2,7 +2,7 @@
  * @Author: zdd
  * @Date: 2023-11-21 10:26:47
  * @LastEditors: zdd dongdong@grizzlychina.com
- * @LastEditTime: 2023-11-22 11:38:56
+ * @LastEditTime: 2023-11-23 22:51:43
  * @FilePath: App.tsx
  */
 import { Image, List, NavBar, TabBar } from 'antd-mobile';
@@ -18,6 +18,12 @@ const tabs = [
     key: 'home',
     title: '首页',
     path: '/home',
+    icon: <AppOutline />
+  },
+  {
+    key: 'movie',
+    title: '电影',
+    path: '/movie',
     icon: <AppOutline />
   },
   {

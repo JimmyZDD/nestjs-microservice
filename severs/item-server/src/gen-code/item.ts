@@ -19,6 +19,27 @@ export interface Items {
   list: Item[];
 }
 
+export interface MovieQuery {
+  search: string;
+}
+
+export interface Actor {
+  firstName: string;
+  lastName: string;
+}
+
+export interface Movie {
+  year: number;
+  title: string;
+  genres: string[];
+  actors: Actor[];
+}
+
+export interface Movies {
+  total: number;
+  list: Movie[];
+}
+
 export const ITEM_PACKAGE_NAME = "item";
 
 export interface ItemServiceClient {
@@ -49,3 +70,28 @@ export function ItemServiceControllerMethods() {
 }
 
 export const ITEM_SERVICE_NAME = "ItemService";
+
+export interface MovieServiceClient {
+  getMovies(request: MovieQuery): Observable<Movies>;
+}
+
+export interface MovieServiceController {
+  getMovies(request: MovieQuery): Promise<Movies> | Observable<Movies> | Movies;
+}
+
+export function MovieServiceControllerMethods() {
+  return function (constructor: Function) {
+    const grpcMethods: string[] = ["getMovies"];
+    for (const method of grpcMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("MovieService", method)(constructor.prototype[method], method, descriptor);
+    }
+    const grpcStreamMethods: string[] = [];
+    for (const method of grpcStreamMethods) {
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("MovieService", method)(constructor.prototype[method], method, descriptor);
+    }
+  };
+}
+
+export const MOVIE_SERVICE_NAME = "MovieService";

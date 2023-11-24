@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""actor"""
+type Actor {
+  firstName: String!
+  lastName: String!
+}
+
+"""movie"""
+type Movie {
+  year: Float!
+  title: String!
+  genres: [String!]!
+  actors: [Actor!]!
+}
+
 """item"""
 type Item {
   id: Float!
@@ -26,6 +40,7 @@ type User {
 type Query {
   item(id: ID!): Item!
   items(page: Int!, pageSize: Int!): [Item!]!
+  movies(search: String!): [Movie!]!
   user(token: String!): User!
   order(id: ID!): Order!
 }

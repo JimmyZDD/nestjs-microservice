@@ -1,7 +1,14 @@
+/*
+ * @Author: zdd
+ * @Date: 2023-11-21 10:26:01
+ * @LastEditors: zdd dongdong@grizzlychina.com
+ * @LastEditTime: 2023-11-23 22:22:33
+ * @FilePath: item.resolver.ts
+ */
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Args, ID, Int } from '@nestjs/graphql';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
-import { Item } from 'src/models';
+import { Item, Movie } from 'src/models';
 import { ItemService } from './item.service';
 
 @Resolver(() => Item)
@@ -20,8 +27,12 @@ export class ItemResolver {
     @Args('pageSize', { type: () => Int }) pageSize: number,
   ) {
     const items = await this.itemService.getItems(page, pageSize);
-    console.log(items);
+    return items;
+  }
 
+  @Query(() => [Movie])
+  async movies(@Args('search', { type: () => String }) search: string) {
+    const items = await this.itemService.getMovies(search);
     return items;
   }
 }

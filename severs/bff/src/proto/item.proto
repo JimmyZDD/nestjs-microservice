@@ -22,3 +22,28 @@ message Item {
 message Items {
   repeated Item list = 1;
 }
+
+service MovieService {
+  rpc GetMovies (MovieQuery) returns (Movies) {}
+}
+
+message MovieQuery {
+  string search = 1;
+}
+
+message Actor {
+  string firstName = 1;
+  string lastName = 2;
+}
+
+message Movie {
+  int32 year = 1;
+  string title = 2;
+  repeated string genres = 3;
+  repeated Actor actors = 4;
+}
+
+message Movies {
+  int32 total = 1;
+  repeated Movie list = 2;
+}
