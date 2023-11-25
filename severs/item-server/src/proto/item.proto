@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package item;
+
+import "common.proto";
+
+service ItemService {
+  rpc FindOne (ItemById) returns (Item) {}
+  rpc GetItems (common.Pagination) returns (Items) {}
+}
+
+message ItemById {
+  int32 id = 1;
+}
+
+message Item {
+  int32 id = 1;
+  string name = 2;
+  string url = 3;
+}
+
+message Items {
+  repeated Item list = 1;
+}
+
+service MovieService {
+  rpc GetMovies (MovieQuery) returns (Movies) {}
+}
+
+message MovieQuery {
+  string search = 1;
+}
+
+message Actor {
+  string firstName = 1;
+  string lastName = 2;
+}
+
+message Movie {
+  int32 year = 1;
+  string title = 2;
+  repeated string genres = 3;
+  repeated Actor actors = 4;
+}
+
+message Movies {
+  int32 total = 1;
+  repeated Movie list = 2;
+}

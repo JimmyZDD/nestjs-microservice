@@ -2,11 +2,11 @@
  * @Author: zdd
  * @Date: 2023-11-21 10:26:01
  * @LastEditors: zdd dongdong@grizzlychina.com
- * @LastEditTime: 2023-11-22 11:11:56
+ * @LastEditTime: 2023-11-25 12:17:03
  * @FilePath: order.service.ts
  */
 import { Injectable } from '@nestjs/common';
-import { Order } from '../../gen-code/Order';
+import { Order } from 'src/gen-code/order';
 import { lastValueFrom } from 'rxjs';
 import { RPCService } from '../rpc/rpc.service';
 import { User } from 'src/models';

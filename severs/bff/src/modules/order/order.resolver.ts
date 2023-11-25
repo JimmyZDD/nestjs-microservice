@@ -2,7 +2,7 @@
  * @Author: zdd
  * @Date: 2023-11-21 10:26:01
  * @LastEditors: zdd dongdong@grizzlychina.com
- * @LastEditTime: 2023-11-22 11:12:16
+ * @LastEditTime: 2023-11-25 12:16:54
  * @FilePath: order.resolver.ts
  */
 import { UseGuards } from '@nestjs/common';
@@ -17,7 +17,7 @@ import {
 import { CurrentUser } from 'src/decorators/user';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { Order, User } from 'src/models';
-import { Order as OrderFromRPC } from '../../gen-code/Order';
+import { Order as OrderFromRPC } from 'src/gen-code/order';
 import { ItemService } from '../item/item.service';
 import { OrderService } from './order.service';
 

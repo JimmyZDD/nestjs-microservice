@@ -2,7 +2,7 @@
  * @Author: zdd
  * @Date: 2023-11-21 10:28:12
  * @LastEditors: zdd dongdong@grizzlychina.com
- * @LastEditTime: 2023-11-21 10:32:56
+ * @LastEditTime: 2023-11-25 16:51:22
  * @FilePath: main.ts
  */
 import { NestFactory } from '@nestjs/core';
@@ -15,7 +15,7 @@ async function bootstrap() {
     transport: Transport.GRPC,
     options: {
       package: 'user',
-      protoPath: join(__dirname, '../../../proto/user.proto'),
+      protoPath: join(__dirname, './proto/user.proto'),
       url: 'localhost:9003'
     }
   });

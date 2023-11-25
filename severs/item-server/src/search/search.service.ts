@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-import * as moviesJson from '../../movies.json';
+import * as moviesJson from '../movies.json';
 import { ConfigService } from '@nestjs/config';
 
 interface MoviesJsonResponse {
