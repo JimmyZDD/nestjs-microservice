@@ -2,7 +2,7 @@
  * @Author: zdd
  * @Date: 2023-11-23 21:34:05
  * @LastEditors: zdd dongdong@grizzlychina.com
- * @LastEditTime: 2023-11-23 21:51:19
+ * @LastEditTime: 2023-11-26 16:10:35
  * @FilePath: search.module.ts
  */
 import { Module, OnModuleInit } from '@nestjs/common';

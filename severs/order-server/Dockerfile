@@ -5,7 +5,7 @@ FROM golang:alpine As build
 
 WORKDIR /usr/app
 
-COPY . .
+COPY ./severs/order-server .
 
 # 设置proxy环境变量，国内用户必选
 ENV GOPROXY https://goproxy.cn,direct

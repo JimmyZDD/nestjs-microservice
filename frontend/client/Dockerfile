@@ -1,26 +1,35 @@
 ###################
-# BUILD FOR LOCAL DEVELOPMENT
+# base
 ###################
+FROM node:18-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-FROM node:18-alpine As build
+
+###################
+# build
+###################
+FROM base As build
 
 # 创建应用目录
 WORKDIR /usr/app
 
 # 安装pnpm
-RUN npm install -g pnpm
 RUN pnpm config set registry https://registry.npm.taobao.org
 
-# 使用 npm ci 安装应用依赖
-COPY pnpm-lock.yaml ./
-COPY package*.json ./
-RUN pnpm install --frozen-lockfile
+# Docker部署monorepo, 借助了pnpm fetch和pnpm install --offline这两个特点
+COPY ./pnpm-lock.yaml ./
+RUN pnpm fetch
 
-# 复制源代码
+# 将整个项目复制下来
 COPY . .
-RUN  pnpm run build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install -r --offline
 
-# 使用镜像中的node用户(而不是 root 用户)
+# 设置 NODE_ENV 环境变量
+ENV NODE_ENV production
+RUN pnpm run -r build
+RUN pnpm deploy --filter=client --prod /prod/client
 
 
 ###################
@@ -30,8 +39,8 @@ RUN  pnpm run build
 FROM bitnami/nginx:latest As production
 
 # 从 build 镜像中复制构建好的代码到最终的镜像中
-COPY --from=build /usr/app/dist/ /usr/share/nginx/html/
-COPY --from=build /usr/app/nginx/default.conf /opt/bitnami/nginx/conf/server_blocks/default.conf
+COPY --from=build /prod/client/dist/ /usr/share/nginx/html/
+COPY --from=build /prod/client/nginx/default.conf /opt/bitnami/nginx/conf/server_blocks/default.conf
 
 EXPOSE 80
 # 使用镜像中的node用户(而不是 root 用户)
