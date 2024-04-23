@@ -26,28 +26,35 @@ export class SearchService {
         index: this.config.get('ELASTICSEARCH_INDEX'),
         body: {
           settings: {
-            // analysis: {
-            //   analyzer: {
-            //     autocomplete_analyzer: {
-            //       tokenizer: 'autocomplete',
-            //       filter: ['lowercase']
-            //     },
-            //     autocomplete_search_analyzer: {
-            //       tokenizer: 'keyword',
-            //       filter: ['lowercase']
-            //     }
-            //   },
-            //   tokenizer: {
-            //           autocomplete: {
-            //             type: 'edge_ngram',
-            //             min_gram: 1,
-            //             max_gram: 30,
-            //             token_chars: ['letter', 'digit', 'whitespace']
-            //           }
-            //         }
-            //       }
-            // }
+            analysis: {
+              filter: {
+                autocomplete_filter: {
+                  type: 'edge_ngram',
+                  min_gram: 1,
+                  max_gram: 20
+                }
+              },
+              // 定义分析规则
+              analyzer: {
+                autocomplete: {
+                  type: 'custom',
+                  tokenizer: 'standard',
+                  filter: ['lowercase', 'autocomplete_filter']
+                }
+              }
+              // 定义分词
+              // tokenizer: {
+              //   autocomplete: {
+              //     type: 'edge_ngram',
+              //     min_gram: 1,
+              //     max_gram: 30,
+              //     token_chars: ['letter', 'digit', 'whitespace']
+              //   }
+              // }
+            }
           },
+          // 定义映射
+
           mappings: {
             properties: {
               title: {
@@ -55,8 +62,8 @@ export class SearchService {
                 fields: {
                   complete: {
                     type: 'text',
-                    analyzer: 'autocomplete_analyzer',
-                    search_analyzer: 'autocomplete_search_analyzer'
+                    analyzer: 'autocomplete',
+                    search_analyzer: 'standard'
                   }
                 }
               },
