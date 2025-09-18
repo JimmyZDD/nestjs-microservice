@@ -1,6 +1,12 @@
 {
     "cSpell.words": [
         "casbin",
-        "gormadapter"
-    ]
+        "Dbname",
+        "gormadapter",
+        "longtext",
+        "varchar"
+    ],
+    "files.associations": {
+         "*.tpl": "gotmpl"
+    }
 }

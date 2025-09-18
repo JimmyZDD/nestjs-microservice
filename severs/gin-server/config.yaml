@@ -90,7 +90,7 @@ local:
 autocode:
     web: web/src
     root: "" # root 自动适配项目根目录, 请不要手动配置,他会在项目加载的时候识别出根路径
-    server: ""
+    server: "gin-server"
     module: 'gin-server'
     ai-path: "https://ai.gin-vue-admin.com/{FUNC}/admin-zdd/3e0e01d7-2a53-4449-b143-83c4ba836e6f"  # AI服务路径
     

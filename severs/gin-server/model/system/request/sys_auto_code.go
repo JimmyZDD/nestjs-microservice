@@ -5,58 +5,11 @@ import (
 	"fmt"
 	"gin-server/global"
 	model "gin-server/model/system"
-	"github.com/pkg/errors"
 	"go/token"
 	"strings"
+
+	"github.com/pkg/errors"
 )
-
-type AutoCode struct {
-	Package             string                 `json:"package"`
-	PackageT            string                 `json:"-"`
-	TableName           string                 `json:"tableName" example:"表名"`              // 表名
-	BusinessDB          string                 `json:"businessDB" example:"业务数据库"`          // 业务数据库
-	StructName          string                 `json:"structName" example:"Struct名称"`       // Struct名称
-	PackageName         string                 `json:"packageName" example:"文件名称"`          // 文件名称
-	Description         string                 `json:"description" example:"Struct中文名称"`    // Struct中文名称
-	Abbreviation        string                 `json:"abbreviation" example:"Struct简称"`     // Struct简称
-	HumpPackageName     string                 `json:"humpPackageName" example:"go文件名称"`    // go文件名称
-	GvaModel            bool                   `json:"gvaModel" example:"false"`            // 是否使用gva默认Model
-	AutoMigrate         bool                   `json:"autoMigrate" example:"false"`         // 是否自动迁移表结构
-	AutoCreateResource  bool                   `json:"autoCreateResource" example:"false"`  // 是否自动创建资源标识
-	AutoCreateApiToSql  bool                   `json:"autoCreateApiToSql" example:"false"`  // 是否自动创建api
-	AutoCreateMenuToSql bool                   `json:"autoCreateMenuToSql" example:"false"` // 是否自动创建menu
-	AutoCreateBtnAuth   bool                   `json:"autoCreateBtnAuth" example:"false"`   // 是否自动创建按钮权限
-	OnlyTemplate        bool                   `json:"onlyTemplate" example:"false"`        // 是否只生成模板
-	IsTree              bool                   `json:"isTree" example:"false"`              // 是否树形结构
-	TreeJson            string                 `json:"treeJson" example:"展示的树json字段"`       // 展示的树json字段
-	IsAdd               bool                   `json:"isAdd" example:"false"`               // 是否新增
-	Fields              []*AutoCodeField       `json:"fields"`
-	GenerateWeb         bool                   `json:"generateWeb" example:"true"`    // 是否生成web
-	GenerateServer      bool                   `json:"generateServer" example:"true"` // 是否生成server
-	Module              string                 `json:"-"`
-	DictTypes           []string               `json:"-"`
-	PrimaryField        *AutoCodeField         `json:"primaryField"`
-	DataSourceMap       map[string]*DataSource `json:"-"`
-	HasPic              bool                   `json:"-"`
-	HasFile             bool                   `json:"-"`
-	HasTimer            bool                   `json:"-"`
-	NeedSort            bool                   `json:"-"`
-	NeedJSON            bool                   `json:"-"`
-	HasRichText         bool                   `json:"-"`
-	HasDataSource       bool                   `json:"-"`
-	HasSearchTimer      bool                   `json:"-"`
-	HasArray            bool                   `json:"-"`
-	HasExcel            bool                   `json:"-"`
-}
-
-type DataSource struct {
-	DBName       string `json:"dbName"`
-	Table        string `json:"table"`
-	Label        string `json:"label"`
-	Value        string `json:"value"`
-	Association  int    `json:"association"` // 关联关系 1 一对一 2 一对多
-	HasDeletedAt bool   `json:"hasDeletedAt"`
-}
 
 func (r *AutoCode) Apis() []model.SysApi {
 	return []model.SysApi{
@@ -221,6 +174,45 @@ func (r *AutoCode) History() SysAutoHistoryCreate {
 	}
 }
 
+type AutoCode struct {
+	Package             string                 `json:"package"`
+	PackageT            string                 `json:"-"`
+	TableName           string                 `json:"tableName" example:"表名"`              // 表名
+	BusinessDB          string                 `json:"businessDB" example:"业务数据库"`          // 业务数据库
+	StructName          string                 `json:"structName" example:"Struct名称"`       // Struct名称
+	PackageName         string                 `json:"packageName" example:"文件名称"`          // 文件名称
+	Description         string                 `json:"description" example:"Struct中文名称"`    // Struct中文名称
+	Abbreviation        string                 `json:"abbreviation" example:"Struct简称"`     // Struct简称
+	HumpPackageName     string                 `json:"humpPackageName" example:"go文件名称"`    // go文件名称
+	GvaModel            bool                   `json:"gvaModel" example:"false"`            // 是否使用gva默认Model
+	AutoMigrate         bool                   `json:"autoMigrate" example:"false"`         // 是否自动迁移表结构
+	AutoCreateResource  bool                   `json:"autoCreateResource" example:"false"`  // 是否自动创建资源标识
+	AutoCreateApiToSql  bool                   `json:"autoCreateApiToSql" example:"false"`  // 是否自动创建api
+	AutoCreateMenuToSql bool                   `json:"autoCreateMenuToSql" example:"false"` // 是否自动创建menu
+	AutoCreateBtnAuth   bool                   `json:"autoCreateBtnAuth" example:"false"`   // 是否自动创建按钮权限
+	OnlyTemplate        bool                   `json:"onlyTemplate" example:"false"`        // 是否只生成模板
+	IsTree              bool                   `json:"isTree" example:"false"`              // 是否树形结构
+	TreeJson            string                 `json:"treeJson" example:"展示的树json字段"`       // 展示的树json字段
+	IsAdd               bool                   `json:"isAdd" example:"false"`               // 是否新增
+	Fields              []*AutoCodeField       `json:"fields"`
+	GenerateWeb         bool                   `json:"generateWeb" example:"true"`    // 是否生成web
+	GenerateServer      bool                   `json:"generateServer" example:"true"` // 是否生成server
+	Module              string                 `json:"-"`
+	DictTypes           []string               `json:"-"`
+	PrimaryField        *AutoCodeField         `json:"primaryField"`
+	DataSourceMap       map[string]*DataSource `json:"-"`
+	HasPic              bool                   `json:"-"`
+	HasFile             bool                   `json:"-"`
+	HasTimer            bool                   `json:"-"`
+	NeedSort            bool                   `json:"-"`
+	NeedJSON            bool                   `json:"-"`
+	HasRichText         bool                   `json:"-"`
+	HasDataSource       bool                   `json:"-"`
+	HasSearchTimer      bool                   `json:"-"`
+	HasArray            bool                   `json:"-"`
+	HasExcel            bool                   `json:"-"`
+}
+
 type AutoCodeField struct {
 	FieldName       string `json:"fieldName"`       // Field名
 	FieldDesc       string `json:"fieldDesc"`       // 中文名
@@ -246,6 +238,15 @@ type AutoCodeField struct {
 	DataSource      *DataSource `json:"dataSource"`      // 数据源
 	CheckDataSource bool        `json:"checkDataSource"` // 是否检查数据源
 	FieldIndexType  string      `json:"fieldIndexType"`  // 索引类型
+}
+
+type DataSource struct {
+	DBName       string `json:"dbName"`
+	Table        string `json:"table"`
+	Label        string `json:"label"`
+	Value        string `json:"value"`
+	Association  int    `json:"association"` // 关联关系 1 一对一 2 一对多
+	HasDeletedAt bool   `json:"hasDeletedAt"`
 }
 
 type AutoFunc struct {
